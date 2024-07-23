@@ -20,22 +20,27 @@
     <link href="https://fonts.googleapis.com/css2?family=Alata&family=IBM+Plex+Sans+JP:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
   </head>
 
-  <body>asdfasdfasdfasdfasdfasdfasdfasdf
-
+  <body>
     <div id="container">
       <div id="wrapper">
         <div id="player"></div>
       </div>
-      
-      <div>
-        <p id="lyrics"></p>
+
+      <div id="lyricsContainer">
+        <p class="lyrics" id="lyrics1"></p>
+        <p class="lyrics" id="lyrics2"></p>
+        <p class="lyrics" id="lyrics3"></p>
+      </div>
+      <div id="typingContainer">
+        <p id="typing"></p>
       </div>
     </div>
+    
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity = "sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin = "anonymous"></script>
+    <script src="./asset/js/script.js"></script>
 
     <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
-      
-
-      <script>
+    <script>
       // 2. This code loads the IFrame Player API code asynchronously.
       var tag = document.createElement('script');
 
@@ -69,7 +74,5 @@
       function onPlayerStateChange(event) {
       }
     </script>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity = "sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin = "anonymous"></script>
-    <script src="./asset/main.js"></script>
   </body>
 </html>

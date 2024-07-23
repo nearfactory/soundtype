@@ -8,19 +8,29 @@ html, body{
   padding: 0;
 
   background-color: #080808;
+
+  font-size: 10px;
+  font-family: "Alata", "IBM Plex Sans JP", sans-serif;
 }
 
 #container{
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template: "video lyrics" 1fr
+                 "video type" 1fr
+                 / 1fr 1fr;
 
   width: 100%;
   height: 100%;
+
+  margin: 0;
+  padding: 0;
 }
 
 #wrapper {
   display: block;
   position: relative;
+
+  grid-area: video;
 
   width: 100%;
 
@@ -41,4 +51,57 @@ html, body{
   left: 0;
   bottom: 0;
   right: 0;
+}
+
+#lyricsContainer{
+  display: flex;
+  flex-direction: column;
+
+  grid-area: lyrics;
+
+  width: 100%;
+  margin: auto auto 0 auto;
+}
+
+.lyrics{
+  display: block;
+
+  height: 8rem;
+  width: 100%;
+
+  margin: 0;
+  padding: 0;
+
+  color: #ffffff;
+  font-size: 2.25rem;
+  text-align: center;
+}
+
+#lyrics1, #lyrics3{
+  filter: opacity(0.25);
+}
+
+#typingContainer{
+  display: block;
+  
+  grid-area: type;
+
+  width: 100%;
+  height: 15rem;
+  margin: 5rem auto 5rem auto;
+}
+
+#typing{
+  display: block;
+
+  height: 8rem;
+  width: 100%;
+
+  margin: 0;
+  padding: 0;
+
+  color: #ffffff;
+  font-size: 2.25rem;
+  text-align: center;
+  letter-spacing: 0.5rem;
 }
