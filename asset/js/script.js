@@ -11,7 +11,7 @@ const kanaToRomajiMap = {
   'わ': 'wa', 'を': 'wo', 'ん': 'n',
   'が': 'ga', 'ぎ': 'gi', 'ぐ': 'gu', 'げ': 'ge', 'ご': 'go',
   'ざ': 'za', 'じ': 'ji', 'ず': 'zu', 'ぜ': 'ze', 'ぞ': 'zo',
-  'だ': 'da', 'ぢ': 'ji', 'づ': 'zu', 'で': 'de', 'ど': 'do',
+  'だ': 'da', 'ぢ': 'di', 'づ': 'du', 'で': 'de', 'ど': 'do',
   'ば': 'ba', 'び': 'bi', 'ぶ': 'bu', 'べ': 'be', 'ぼ': 'bo',
   'ぱ': 'pa', 'ぴ': 'pi', 'ぷ': 'pu', 'ぺ': 'pe', 'ぽ': 'po',
   'きゃ': 'kya', 'きゅ': 'kyu', 'きょ': 'kyo',
@@ -105,6 +105,7 @@ fetchCSV(csvUrl, function(csvText) {
 
 
 
+
   typingLine();
 });
 
@@ -183,25 +184,37 @@ const typeNG = document.querySelector("#typeNG");
 var targetText;
 var userInput;
 
+var missCount = 0;
+var correctCount = 0;
+var startTime;
+var typeStart = false;
+
+var now = new Date();
 
 
 
 function typeCheck(event){
   if (event.key.length === 1) { // 1文字のキー（例えば、アルファベットや数字など）
     userInput += event.key.toUpperCase();
-    console.log("userInputの最終文字 " + userInput.slice(-1));
-    console.log("targetTextの対象文字 " + targetText.slice(userInput.length-1, userInput.length));
-    console.log("", )
+    if(!typeStart){
+      startTime = now.getTime();
+      typeStart = true;
+    }
+    // console.log("userInputの最終文字 " + userInput.slice(-1));
+    // console.log("targetTextの対象文字 " + targetText.slice(userInput.length-1, userInput.length));
+    // console.log("", )
     if(userInput.slice(-1) == targetText.slice(userInput.length-1, userInput.length)){
       typeOK.pause();      
       typeOK.currentTime = 0;
       typeOK.play();
+      correctCount++;
     }
     else{
       userInput = userInput.slice(0, -1);
       typeNG.pause();      
       typeNG.currentTime = 0;
       typeNG.play();
+      missCount++;
     }
   }
 
@@ -218,12 +231,25 @@ function typeCheck(event){
 
   if (isCorrect && userInput.length === targetText.length) {
     document.removeEventListener('keydown', typeCheck);
-    i = i < lyrics.length-3 ? i+1 : i;
-    lyricsBox1.textContent = lyrics[i][0];
-    lyricsBox2.textContent = lyrics[i+1][0];
-    lyricsBox3.textContent = lyrics[i+2][0];
-    targetBox.textContent = kanaToRomaji(lyrics[i+1][1]).toUpperCase();
-    typingLine();
+    i = i < lyrics.length-3 ? i+1 : -1;
+    if(i>=0){
+      lyricsBox1.textContent = lyrics[i][0];
+      lyricsBox2.textContent = lyrics[i+1][0];
+      lyricsBox3.textContent = lyrics[i+2][0];
+      targetBox.textContent = kanaToRomaji(lyrics[i+1][1]).toUpperCase();
+      typingLine();
+    }
+    else if(i == -1){
+      var now2 = new Date();
+      var endTime = now2.getTime();
+      var time = endTime - startTime;
+      console.log(startTime);
+      console.log(endTime);
+      console.log(time);
+      console.log(time / 1000 + "秒経過");
+      console.log(correctCount / time * 1000 + "タイプ/秒 です");
+      console.log(missCount + "回ミスタイプがありました");
+    }
   }
 }
 
