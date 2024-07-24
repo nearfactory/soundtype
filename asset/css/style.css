@@ -83,16 +83,21 @@ html, body{
 
 #typingContainer{
   display: block;
-  
+  position: relative;
+
   grid-area: type;
 
   width: 100%;
   height: 15rem;
   margin: 5rem auto 5rem auto;
+  color: #ffffff;
 }
 
-#typing{
+#targetText{
   display: block;
+  position: absolute;
+  top: 10%;
+  left: 0;
 
   height: 8rem;
   width: 100%;
@@ -101,6 +106,24 @@ html, body{
   padding: 0;
 
   color: #ffffff;
+  font-size: 2.25rem;
+  text-align: center;
+  letter-spacing: 0.5rem;
+}
+
+#userText{
+  display: block;
+  position: absolute;
+  top: 30%;
+  left: 0;
+
+  height: 8rem;
+  width: 100%;
+
+  margin: 0;
+  padding: 0;
+
+  color: #ff00ff;
   font-size: 2.25rem;
   text-align: center;
   letter-spacing: 0.5rem;

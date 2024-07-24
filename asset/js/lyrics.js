@@ -99,7 +99,13 @@ fetchCSV(csvUrl, function(csvText) {
   lyricsBox1.textContent = lyrics[i][0];
   lyricsBox2.textContent = lyrics[i+1][0];
   lyricsBox3.textContent = lyrics[i+2][0];
-  typingBox.textContent = kanaToRomaji(lyrics[i+1][1]).toUpperCase();
+  targetBox.textContent = kanaToRomaji(lyrics[i+1][1]).toUpperCase();
+  // userBox.textContent = kanaToRomaji(lyrics[i+1][1]).toUpperCase();
+
+
+
+
+  typingLine();
 });
 
 
@@ -114,17 +120,119 @@ var i=0;
 const lyricsBox1 = document.getElementById("lyrics1");
 const lyricsBox2 = document.getElementById("lyrics2");
 const lyricsBox3 = document.getElementById("lyrics3");
-const typingBox = document.getElementById("typing");
+const targetBox = document.getElementById("targetText");
+const userBox = document.getElementById("userText");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 document.body.addEventListener("keydown", (e) => {
   if (e.shiftKey && e.key === 'Enter'){
-    i = i > 0 ? i-1 : i;
+      i = i > 0 ? i-1 : i;
+      lyricsBox1.textContent = lyrics[i][0];
+      lyricsBox2.textContent = lyrics[i+1][0];
+      lyricsBox3.textContent = lyrics[i+2][0];
+      targetBox.textContent = kanaToRomaji(lyrics[i+1][1]).toUpperCase();
+      typingLine();
   }
   else if (e.key == "Enter") {
-    i = i < lyrics.length-3 ? i+1 : i;
+      i = i < lyrics.length-3 ? i+1 : i;
+      lyricsBox1.textContent = lyrics[i][0];
+      lyricsBox2.textContent = lyrics[i+1][0];
+      lyricsBox3.textContent = lyrics[i+2][0];
+      targetBox.textContent = kanaToRomaji(lyrics[i+1][1]).toUpperCase();
+      typingLine();
   }
-  lyricsBox1.textContent = lyrics[i][0];
-  lyricsBox2.textContent = lyrics[i+1][0];
-  lyricsBox3.textContent = lyrics[i+2][0];
-  typingBox.textContent = kanaToRomaji(lyrics[i+1][1]).toUpperCase();
 });
+
+
+
+
+
+
+
+const typeOK = document.querySelector("#typeOK");
+const typeNG = document.querySelector("#typeNG");
+
+var targetText;
+var userInput;
+
+
+
+
+function typeCheck(event){
+  if (event.key.length === 1) { // 1文字のキー（例えば、アルファベットや数字など）
+    userInput += event.key.toUpperCase();
+    console.log("userInputの最終文字 " + userInput.slice(-1));
+    console.log("targetTextの対象文字 " + targetText.slice(userInput.length-1, userInput.length));
+    console.log("", )
+    if(userInput.slice(-1) == targetText.slice(userInput.length-1, userInput.length)){
+      typeOK.pause();      
+      typeOK.currentTime = 0;
+      typeOK.play();
+    }
+    else{
+      userInput = userInput.slice(0, -1);
+      typeNG.pause();      
+      typeNG.currentTime = 0;
+      typeNG.play();
+    }
+  }
+
+  let isCorrect = true;
+
+  for (let i = 0; i < targetText.length; i++) {
+    if (userInput[i] == targetText[i]) {
+    }
+    else {
+    }
+  }
+
+  userBox.innerText = userInput;
+
+  if (isCorrect && userInput.length === targetText.length) {
+    document.removeEventListener('keydown', typeCheck);
+    i = i < lyrics.length-3 ? i+1 : i;
+    lyricsBox1.textContent = lyrics[i][0];
+    lyricsBox2.textContent = lyrics[i+1][0];
+    lyricsBox3.textContent = lyrics[i+2][0];
+    targetBox.textContent = kanaToRomaji(lyrics[i+1][1]).toUpperCase();
+    typingLine();
+  }
+}
+
+function typingLine(){
+  targetText = targetBox.innerText;
+  console.log(targetText);
+
+  userInput = '';
+  userBox.innerText = '';
+
+  document.addEventListener('keydown', typeCheck);
+}
